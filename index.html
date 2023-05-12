@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <h1>Registro</h1>
+    <form action="https://sheetdb.io/api/v1/e6ssx58t2930o" method="post" id="sheetdb-form">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="data[nombre]"><br>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="data[correo]"><br>
+
+      <label for="contrasena">Contraseña:</label>
+      <input type="password" id="contrasena" name="data[contrasena]"><br>
+
+      <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+    var form = document.getElementById('sheetdb-form');
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+          fetch(form.action, {
+              method : "POST",
+              body: new FormData(document.getElementById("sheetdb-form")),
+          }).then(
+              response => response.json()
+          ).then((html) => {
+            // you can put any JS code here
+            //window.open('page2.html', '_blank');
+
+          });
+        });
+
+    </script>
+
+  </body>
+</html>
+
