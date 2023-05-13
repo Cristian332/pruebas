@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reporte de Anomalías en Sanitarios</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+<body>
+	<header>
+		<h1>Reporte de Anomalías en Sanitarios</h1>
+	</header>
+
+	<form id="form" action="https://formsubmit.co/cris3312.muoz@gmail.com" method="POST">
+		<input type="text" value="Baño primer piso Administrativo" name="lugar" readonly>
+		<label for="problema">Seleccione el problema:</label>
+		<select id="problema" name="problema" required>
+			<option value="">Seleccione una opción</option>
+			<option value="Fuga de agua">Fuga de agua</option>
+			<option value="Inodoro tapado">Inodoro tapado</option>
+			<option value="Lavabo tapado">Lavabo tapado</option>
+			<option value="Falta de papel higiénico">Falta de papel higiénico</option>
+			<option value="Otro">Otro</option>
+		</select>
+
+		<label for="otroProblema">Describa el problema:</label>
+		<input type="text" id="otroProblema" name="otroProblema">
+
+		<label for="Imagen">Adjunte una imagen (opcional):</label>
+		<input type="file" name="imag">
+
+        <input type="button" value="Generar Reporte" onclick="enviarExcel()">
+		<input type="button" value="Terminar" onclick="enviarCorreo()">
+		
+	</form>
+
+	<script>
+	const form = document.querySelector('#form');
+
+function enviarCorreo() {
+    form.action = "https://formsubmit.co/cris3312.muoz@gmail.com";
+    form.submit();
+}
+
+function enviarExcel() {
+    event.preventDefault(); // detener el envío normal del formulario
+  
+    const formData = new FormData(form); // crear objeto FormData con los datos del formulario
+    
+    // Excluir el campo "imagen" del objeto enviado a la API
+    const objectData = formDataToObject(formData);
+    delete objectData.imagen;
+    
+    fetch('https://sheetdb.io/api/v1/fchj1suwbfdom', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(objectData) // enviar los datos del formulario como cuerpo de la petición
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // hacer algo con la respuesta de la API
+        alert("Generado exitosamente");
+    })
+    .catch(error => {
+        console.error(error); // manejar errores de la petición
+    });
+}
+
+
+function formDataToObject(formData) {
+    let object = {};
+    formData.forEach(function(value, key){
+        if (key.includes('[')) {
+            const keys = key.split(/\[|\]/).filter(x => x !== '');
+            let currentObject = object;
+            for (let i = 0; i < keys.length; i++) {
+                const currentKey = keys[i];
+                if (i === keys.length - 1) {
+                    currentObject[currentKey] = value;
+                } else {
+                    currentObject[currentKey] = currentObject[currentKey] || {};
+                    currentObject = currentObject[currentKey];
+                }
+            }
+        } else {
+            object[key] = value;
+        }
+    });
+    return object;
+}
+
+	</script>
+</body>
+</html>
