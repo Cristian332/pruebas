@@ -11,8 +11,10 @@
 		<h1>Reporte de Anomalías en Sanitarios</h1>
 	</header>
 
-	<form id="form" action="https://formsubmit.co/cris3312.muoz@gmail.com" method="POST">
+	<form action="https://formsubmit.co/cris3312.muoz@gmail.com" method="POST">
+		
 		<input type="text" value="Baño primer piso Administrativo" name="lugar" readonly>
+		
 		<label for="problema">Seleccione el problema:</label>
 		<select id="problema" name="problema" required>
 			<option value="">Seleccione una opción</option>
@@ -26,8 +28,8 @@
 		<label for="otroProblema">Describa el problema:</label>
 		<input type="text" id="otroProblema" name="otroProblema">
 
-		<label for="Imag">Adjunte una imagen (opcional):</label>
-		<input type="file" name="imag">
+		<label for="imagen">Adjunte una imagen (opcional):</label>
+		<input type="file" id="imagen" name="imagen">
 
         <input type="button" value="Generar Reporte" onclick="enviarExcel()">
 		<input type="button" value="Terminar" onclick="enviarCorreo()">
